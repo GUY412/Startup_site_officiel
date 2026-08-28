@@ -1,0 +1,91 @@
+.contact-success {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 44px;
+  text-align: center;
+}
+
+.contact-success h2 {
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.contact-success p {
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.contact-info h2 {
+  color: var(--color-primary);
+}
+
+.contact-info p {
+  color: var(--color-text-muted);
+}
+
+.contact-info-item {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-info-item a {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.contact-form {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 11px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.contact-form button {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+@media (max-width: 780px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
