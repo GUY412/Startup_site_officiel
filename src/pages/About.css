@@ -23,6 +23,55 @@
   margin: 0;
 }
 
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.team-card {
+  overflow: hidden;
+}
+
+.team-photo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.team-photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.team-card-body {
+  padding: 20px 22px;
+}
+
+.team-card-body h3 {
+  margin-bottom: 2px;
+  color: var(--color-primary);
+}
+
+.team-role {
+  display: block;
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.team-card-body p {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
 .skills-grid {
   list-style: none;
   display: flex;

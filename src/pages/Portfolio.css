@@ -5,11 +5,19 @@
 }
 
 .portfolio-card {
+  display: block;
   overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.portfolio-thumb {
+.portfolio-card:hover {
+  transform: translateY(-3px);
+}
+
+.portfolio-thumb,
+.portfolio-thumb-img {
   height: 160px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,6 +26,7 @@
   font-size: 2.2rem;
   font-weight: 800;
   letter-spacing: 0.05em;
+  object-fit: cover;
 }
 
 .portfolio-body {

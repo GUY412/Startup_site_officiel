@@ -90,6 +90,30 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.admin-tab {
+  padding: 10px 16px;
+  border-radius: 10px 10px 0 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.admin-tab:hover {
+  color: #fff;
+}
+
+.admin-tab.is-active {
+  background: var(--color-bg);
+  color: var(--color-primary);
+}
+
 .admin-filters {
   display: flex;
   align-items: center;

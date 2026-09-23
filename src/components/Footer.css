@@ -6,7 +6,7 @@
 
 .footer-inner {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr repeat(auto-fit, minmax(120px, 1fr));
   gap: 40px;
   padding: 56px 24px 40px;
 }
@@ -18,14 +18,9 @@
 }
 
 .footer-logo {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 12px;
-}
-
-.footer-logo span {
-  color: var(--color-accent-light);
+  height: 80px;
+  width: auto;
+  margin-bottom: 14px;
 }
 
 .footer-col {

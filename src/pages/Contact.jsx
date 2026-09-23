@@ -1,14 +1,26 @@
-import { useState } from 'react'
-import { mainCategories } from '../data/services.js'
-import { api } from '../lib/api.js'
+import { useEffect, useState } from 'react'
+import { api, toList } from '../lib/api.js'
 import './Contact.css'
 
-const CONTACT_EMAIL = 'contact@oknok.africa'
-
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', service: mainCategories[0], message: '' })
+  const [settings, setSettings] = useState({})
+  const [form, setForm] = useState({ name: '', email: '', service: '', message: '' })
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    api.settings
+      .get()
+      .then((data) => {
+        setSettings(data)
+        const categories = toList(data.main_categories)
+        if (categories.length > 0) setForm((prev) => ({ ...prev, service: categories[0] }))
+      })
+      .catch(() => setSettings({}))
+  }, [])
+
+  const mainCategories = toList(settings.main_categories)
+  const contactEmail = settings.contact_email || ''
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -23,7 +35,7 @@ export default function Contact() {
     try {
       await api.submitDevis(form)
       setStatus('sent')
-      setForm({ name: '', email: '', service: mainCategories[0], message: '' })
+      setForm({ name: '', email: '', service: mainCategories[0] || '', message: '' })
     } catch (err) {
       setStatus('error')
       setError(err.message || "Une erreur est survenue. Réessayez ou écrivez-nous directement par email.")
@@ -67,14 +79,13 @@ export default function Contact() {
         <div className="container contact-grid">
           <div className="contact-info">
             <h2>Restons en contact</h2>
-            <p>
-              Décrivez-nous votre besoin — cybersécurité, design, communication, marketing ou gestion de
-              projet — et nous reviendrons vers vous rapidement avec une proposition adaptée.
-            </p>
-            <div className="contact-info-item">
-              <span className="eyebrow">Email</span>
-              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-            </div>
+            <p>{settings.contact_intro}</p>
+            {contactEmail && (
+              <div className="contact-info-item">
+                <span className="eyebrow">Email</span>
+                <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+              </div>
+            )}
           </div>
 
           <form className="card contact-form" onSubmit={handleSubmit}>

@@ -222,6 +222,12 @@
   background: var(--color-surface);
 }
 
+.home-empty-note {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
 .home-projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

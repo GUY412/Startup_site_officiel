@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import logo from '../assets/logo-oknok-stacked.png'
 import './Navbar.css'
 
 const links = [
@@ -17,7 +18,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className="container navbar-inner">
         <NavLink to="/" className="navbar-logo" onClick={() => setOpen(false)}>
-          OK<span>NOK</span>
+          <img src={logo} alt="OKNOK" />
         </NavLink>
 
         <nav className={`navbar-links ${open ? 'is-open' : ''}`}>

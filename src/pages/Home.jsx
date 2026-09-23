@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { serviceCategories, mainCategories } from '../data/services.js'
-import { projects } from '../data/projects.js'
+import { api, toList } from '../lib/api.js'
 import { ServiceIcon } from '../components/icons.jsx'
 import Slideshow from '../components/Slideshow.jsx'
 import slide1 from '../assets/slides/slide-cybersecurite.svg'
@@ -15,8 +15,23 @@ const heroSlides = [
 ]
 
 export default function Home() {
-  const featured = serviceCategories.slice(0, 3)
-  const floatCards = serviceCategories.slice(0, 4)
+  const [settings, setSettings] = useState({})
+  const [services, setServices] = useState([])
+  const [projects, setProjects] = useState([])
+
+  useEffect(() => {
+    api.settings.get().then(setSettings).catch(() => setSettings({}))
+    api.services.list().then(setServices).catch(() => setServices([]))
+    api.projects
+      .list()
+      .then((data) => setProjects(data.slice(0, 3)))
+      .catch(() => setProjects([]))
+  }, [])
+
+  const featured = services.slice(0, 3)
+  const floatCards = services.slice(0, 4)
+  const mainCategories = toList(settings.main_categories)
+  const heroTitleLines = (settings.home_hero_title || '').split('\n').filter(Boolean)
 
   return (
     <>
@@ -24,20 +39,17 @@ export default function Home() {
         <div className="container hero-grid">
           <div className="hero-copy">
             <span className="eyebrow" style={{ color: 'var(--color-accent-light)' }}>
-              Solutions numériques & innovation digitale
+              {settings.home_hero_eyebrow}
             </span>
             <h1>
-              Innover.
-              <br />
-              Transformer.
-              <br />
-              Croître.
+              {heroTitleLines.map((line, i) => (
+                <span key={line}>
+                  {line}
+                  {i < heroTitleLines.length - 1 && <br />}
+                </span>
+              ))}
             </h1>
-            <p className="hero-lead">
-              OKNOK accompagne entreprises, organisations et entrepreneurs dans leur transformation
-              digitale : cybersécurité, design, communication, marketing et gestion de projets
-              innovants.
-            </p>
+            <p className="hero-lead">{settings.home_hero_lead}</p>
             <div className="hero-actions">
               <Link to="/contact" className="btn btn-primary">
                 Demander un devis
@@ -72,7 +84,7 @@ export default function Home() {
         <div className="container">
           <div className="hero-float-cards">
             {floatCards.map((service) => (
-              <Link to="/services" className="hero-float-card" key={service.title}>
+              <Link to="/services" className="hero-float-card" key={service.id}>
                 <span className="hero-float-icon">
                   <ServiceIcon name={service.icon} />
                 </span>
@@ -97,7 +109,7 @@ export default function Home() {
 
           <div className="home-services-grid">
             {featured.map((service) => (
-              <div className="card home-service-card" key={service.title}>
+              <div className="card home-service-card" key={service.id}>
                 <div className="home-service-icon">
                   <ServiceIcon name={service.icon} />
                 </div>
@@ -123,15 +135,19 @@ export default function Home() {
             <p>Un aperçu des projets que nous accompagnons.</p>
           </div>
 
-          <div className="home-projects-grid">
-            {projects.slice(0, 3).map((project) => (
-              <div className="card home-project-card" key={project.title + project.category}>
-                <span className="badge">{project.category}</span>
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-              </div>
-            ))}
-          </div>
+          {projects.length === 0 ? (
+            <p className="home-empty-note">Nos réalisations seront bientôt présentées ici.</p>
+          ) : (
+            <div className="home-projects-grid">
+              {projects.map((project) => (
+                <div className="card home-project-card" key={project.id}>
+                  {project.category && <span className="badge">{project.category}</span>}
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="home-services-cta">
             <Link to="/realisations" className="btn btn-dark-outline">
